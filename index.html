@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123b72">
+<meta name="description" content="Apex Academy demo website. Explore courses and submit an admission enquiry.">
+<title>Apex Academy | Learn. Grow. Succeed.</title>
+
+<style>
+:root {
+  --blue: #123b72;
+  --blue2: #2059a5;
+  --sky: #eaf3ff;
+  --gold: #ffbf47;
+  --ink: #19263a;
+  --muted: #65748a;
+  --white: #ffffff;
+  --bg: #f6f9fd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: var(--white); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+button, input, select, textarea { font: inherit; }
+img { display: block; max-width: 100%; }
+.container { width: min(1120px, 90%); margin: auto; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 20px; min-height: 46px; border: 0; border-radius: 6px;
+  background: var(--gold); color: #17263c; font-weight: 700; font-size: 13px;
+  cursor: pointer; transition: .2s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(.97); }
+.btn-blue { background: var(--blue); color: white; }
+.btn-outline { background: transparent; border: 1px solid #b9cbe2; color: var(--blue); }
+
+.eyebrow { color: var(--blue2); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; }
+.section { padding: 78px 0; }
+.section-head { max-width: 650px; text-align: center; margin: 0 auto 36px; }
+.section-head h2 { font-size: clamp(29px, 5vw, 43px); line-height: 1.2; margin: 10px 0; letter-spacing: -1px; }
+.section-head p { color: var(--muted); font-size: 14px; }
+
+header { background: white; position: sticky; top: 0; z-index: 20; box-shadow: 0 3px 18px #152b4c0b; }
+.nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.brand { color: var(--blue); font-size: 23px; font-weight: 900; letter-spacing: -.8px; }
+.brand span { color: var(--blue2); }
+.nav-links { display: flex; align-items: center; gap: 23px; list-style: none; font-size: 13px; font-weight: 600; }
+.nav-links a:hover { color: var(--blue2); }
+.menu-toggle { display: none; padding: 8px 12px; border: 1px solid #d5dfed; border-radius: 5px; background: white; color: var(--blue); }
+
+.hero { background: linear-gradient(115deg, #edf5ff, #fff 67%); overflow: hidden; }
+.hero-grid { min-height: 540px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 35px; align-items: center; padding-top: 45px; padding-bottom: 45px; }
+.hero h1 { color: var(--blue); font-size: clamp(39px, 6vw, 63px); line-height: 1.08; letter-spacing: -2px; margin: 17px 0; }
+.hero h1 span { color: var(--blue2); }
+.hero-copy > p { max-width: 490px; color: var(--muted); font-size: 15px; margin-bottom: 25px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-note { margin-top: 20px; font-size: 11px; color: #71809a; }
+.hero-image { width: 100%; height: 390px; object-fit: cover; border-radius: 16px; box-shadow: 0 20px 45px #123b7220; }
+
+.stats { background: var(--blue); color: white; }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); text-align: center; padding: 26px 0; gap: 12px; }
+.stat strong { display: block; color: var(--gold); font-size: 27px; }
+.stat span { font-size: 12px; color: #e0eaf8; }
+
+.courses { background: var(--bg); }
+.card-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.card { background: white; border: 1px solid #e2eaf5; border-radius: 10px; overflow: hidden; transition: .2s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px #123b7210; }
+.card img { width: 100%; height: 175px; object-fit: cover; background: var(--sky); }
+.card-content { padding: 21px; }
+.tag { display: inline-block; background: var(--sky); color: var(--blue); border-radius: 4px; padding: 4px 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.card h3 { font-size: 20px; margin: 10px 0 6px; }
+.card p { color: var(--muted); font-size: 13px; }
+.card-bottom { margin-top: 17px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.fee { font-weight: 800; color: var(--blue); font-size: 15px; }
+.text-link { color: var(--blue2); font-size: 12px; font-weight: 800; }
+
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; }
+.why-image { width: 100%; height: 360px; object-fit: cover; border-radius: 12px; }
+.why-copy h2 { color: var(--blue); font-size: clamp(30px, 5vw, 43px); line-height: 1.2; margin: 12px 0 17px; }
+.why-copy > p { color: var(--muted); font-size: 14px; }
+.benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 23px 0; }
+.benefit { font-size: 13px; font-weight: 700; }
+.benefit span { display: inline-grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: var(--sky); color: var(--blue); margin-right: 6px; }
+
+.results { background: var(--sky); }
+.results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.result-card { background: white; border-radius: 10px; padding: 25px; border: 1px solid #dce9f8; }
+.result-card strong { color: var(--blue); font-size: 30px; display: block; }
+.result-card h3 { font-size: 15px; margin: 6px 0; }
+.result-card p { color: var(--muted); font-size: 12px; }
+.disclaimer { text-align: center; color: var(--muted); font-size: 11px; margin-top: 22px; }
+
+.testimonial { border: 1px solid #e2eaf5; padding: 24px; border-radius: 10px; background: white; }
+.stars { color: #dc9d18; letter-spacing: 2px; }
+.testimonial p { color: var(--muted); font-size: 13px; margin: 12px 0; }
+.testimonial strong { font-size: 13px; }
+.testimonial small { display: block; color: var(--muted); font-size: 11px; }
+
+.admissions { background: var(--blue); color: white; }
+.admission-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 45px; align-items: start; }
+.admission-copy h2 { font-size: clamp(32px,5vw,45px); line-height: 1.15; margin: 12px 0 18px; }
+.admission-copy p { color: #d7e4f6; font-size: 14px; margin-bottom: 15px; }
+.admission-points { list-style: none; margin-top: 22px; }
+.admission-points li { margin: 10px 0; font-size: 13px; color: #eef4fd; }
+.form-box { background: white; color: var(--ink); border-radius: 12px; padding: 28px; }
+.form-box h3 { font-size: 24px; margin-bottom: 4px; }
+.form-box > p { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12px; font-weight: 700; }
+.field input, .field select, .field textarea { width: 100%; padding: 12px; min-height: 45px; border: 1px solid #d6dfec; border-radius: 5px; background: white; color: var(--ink); }
+.field textarea { min-height: 80px; resize: vertical; }
+.form-grid .btn { width: 100%; }
+.form-message { font-size: 12px; color: #24653a; min-height: 18px; grid-column: 1 / -1; }
+
+.faq { max-width: 780px; margin: auto; }
+details { border-bottom: 1px solid #e1e7f0; padding: 17px 0; }
+summary { cursor: pointer; font-weight: 700; font-size: 14px; color: var(--blue); }
+details p { color: var(--muted); font-size: 13px; padding-top: 10px; }
+
+footer { background: #0d284e; color: white; padding: 36px 0 20px; }
+.footer-top { display: flex; justify-content: space-between; gap: 25px; padding-bottom: 25px; }
+.footer-brand p { color: #c4d4e9; font-size: 12px; max-width: 350px; margin-top: 9px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 17px; font-size: 12px; }
+.footer-links a:hover { color: var(--gold); }
+.copyright { border-top: 1px solid #28466f; padding-top: 17px; color: #b8cbe2; text-align: center; font-size: 11px; }
+
+@media(max-width: 800px) {
+  .menu-toggle { display: block; }
+  .nav-links { display: none; position: absolute; top: 76px; left: 0; width: 100%; padding: 16px 5%; background: white; box-shadow: 0 10px 15px #00000010; flex-direction: column; align-items: stretch; gap: 0; }
+  .nav-links.open { display: flex; }
+  .nav-links li a { display: block; padding: 10px 0; }
+  .nav-links .btn { margin-top: 8px; }
+  .hero-grid { grid-template-columns: 1fr; padding-top: 50px; gap: 28px; }
+  .hero-image { height: 280px; }
+  .card-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .why-grid, .admission-grid { grid-template-columns: 1fr; gap: 28px; }
+  .why-image { height: 280px; }
+  .results-grid { grid-template-columns: 1fr; }
+  .section { padding: 60px 0; }
+}
+@media(max-width: 480px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .card img { height: 210px; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .stat { padding: 10px 0; }
+  .benefits { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .form-box { padding: 20px 16px; }
+  .footer-top { flex-direction: column; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+  *,*::before,*::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a href="#home" class="brand">APEX<span>ACADEMY.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">☰ Menu</button>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#admissions" class="btn">Enquire Now ↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">YOUR FUTURE STARTS HERE</span>
+      <h1>Learn today.<br><span>Lead tomorrow.</span></h1>
+      <p>Build strong foundations, learn with confidence and take the next step toward your goals with a learning experience designed around you.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#courses">Explore Courses ↓</a>
+        <a class="btn btn-outline" href="#admissions">Admission Enquiry ↗</a>
+      </div>
+      <p class="hero-note">A SAMPLE EDUCATION WEBSITE BY ZORD STUDIO</p>
+    </div>
+    <img class="hero-image" src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=85" alt="Students learning together" fetchpriority="high">
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><strong>3+</strong><span>Learning Programs</span></div>
+    <div class="stat"><strong>1:1</strong><span>Learning Support</span></div>
+    <div class="stat"><strong>100%</strong><span>Focus on Learning</span></div>
+    <div class="stat"><strong>∞</strong><span>Room to Improve</span></div>
+  </div>
+</section>
+
+<section class="section courses" id="courses">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FIND YOUR PATH</span>
+      <h2>Courses built around your goals.</h2>
+      <p>Explore our sample programs. Course details, fees and eligibility should be updated for the real institute.</p>
+    </div>
+
+    <div class="card-grid">
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" alt="Students studying in a classroom" loading="lazy">
+        <div class="card-content">
+          <span class="tag">School Education</span>
+          <h3>Foundation Classes</h3>
+          <p>Build subject knowledge, improve concepts and practise with structured lessons.</p>
+          <div class="card-bottom"><span class="fee">Fees on enquiry</span><a class="text-link" href="#admissions">Learn More ↗</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" alt="Books and notes for exam preparation" loading="lazy">
+        <div class="card-content">
+          <span class="tag">Exam Preparation</span>
+          <h3>Competitive Exams</h3>
+          <p>Practise important questions, review concepts and prepare with a clear study plan.</p>
+          <div class="card-bottom"><span class="fee">Fees on enquiry</span><a class="text-link" href="#admissions">Learn More ↗</a></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Student learning on a laptop" loading="lazy">
+        <div class="card-content">
+          <span class="tag">Digital Skills</span>
+          <h3>Computer Courses</h3>
+          <p>Discover computer fundamentals and build useful digital skills through practice.</p>
+          <div class="card-bottom"><span class="fee">Fees on enquiry</span><a class="text-link" href="#admissions">Learn More ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why-us">
+  <div class="container why-grid">
+    <img class="why-image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1000&q=85" alt="Teacher supporting students in a classroom" loading="lazy">
+    <div class="why-copy">
+      <span class="eyebrow">WHY APEX ACADEMY?</span>
+      <h2>A better way to learn and grow.</h2>
+      <p>Our sample institute concept puts understanding, regular practice and student support at the centre of the learning experience.</p>
+      <div class="benefits">
+        <div class="benefit"><span>✓</span> Clear concepts</div>
+        <div class="benefit"><span>✓</span> Regular practice</div>
+        <div class="benefit"><span>✓</span> Learning guidance</div>
+        <div class="benefit"><span>✓</span> Progress reviews</div>
+      </div>
+      <a href="#admissions" class="btn btn-blue">Talk to Our Team ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="section results" id="results">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">PROGRESS MATTERS</span>
+      <h2>Every step forward counts.</h2>
+      <p>A sample results section. Replace these placeholders with verified institute results before publishing for a real client.</p>
+    </div>
+    <div class="results-grid">
+      <div class="result-card"><strong>Concepts</strong><h3>Build strong foundations</h3><p>Focus on understanding before moving to advanced topics.</p></div>
+      <div class="result-card"><strong>Practice</strong><h3>Learn by doing</h3><p>Use exercises and tests to identify areas for improvement.</p></div>
+      <div class="result-card"><strong>Growth</strong><h3>Track your progress</h3><p>Review performance and plan the next learning steps.</p></div>
+    </div>
+    <p class="disclaimer">No student ranks, exam results or success rates are claimed by this demo.</p>
+  </div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">THE LEARNING EXPERIENCE</span>
+      <h2>Designed around students.</h2>
+    </div>
+    <div class="results-grid">
+      <article class="testimonial">
+        <div class="stars" aria-label="Sample testimonial">★★★★★</div>
+        <p>“A good learning environment helps students ask questions and understand concepts step by step.”</p>
+        <strong>Student Feedback</strong>
+        <small>Illustrative sample — not a real testimonial</small>
+      </article>
+      <article class="testimonial">
+        <div class="stars" aria-label="Sample testimonial">★★★★★</div>
+        <p>“Consistent practice and guidance can make it easier to see where more work is needed.”</p>
+        <strong>Parent Feedback</strong>
+        <small>Illustrative sample — not a real testimonial</small>
+      </article>
+      <article class="testimonial">
+        <div class="stars" aria-label="Sample testimonial">★★★★★</div>
+        <p>“Clear explanations and regular revision are useful parts of a structured study routine.”</p>
+        <strong>Learning Feedback</strong>
+        <small>Illustrative sample — not a real testimonial</small>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section admissions" id="admissions">
+  <div class="container admission-grid">
+    <div class="admission-copy">
+      <span class="eyebrow" style="color:#ffcf70">TAKE THE NEXT STEP</span>
+      <h2>Ready to begin your learning journey?</h2>
+      <p>Share your details and course interest. This demo will prepare a WhatsApp enquiry message for you to review.</p>
+      <ul class="admission-points">
+        <li>✓ Ask about course details</li>
+        <li>✓ Enquire about fees and batches</li>
+        <li>✓ Discuss admission requirements</li>
+      </ul>
+    </div>
+
+    <div class="form-box">
+      <h3>Admission Enquiry</h3>
+      <p>Fill in the details to prepare your message.</p>
+      <form id="admissionForm" class="form-grid">
+        <div class="field">
+          <label for="studentName">Student Name</label>
+          <input id="studentName" name="studentName" autocomplete="name" maxlength="70" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="studentPhone">Phone Number</label>
+          <input id="studentPhone" name="studentPhone" type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9+() -]{8,18}" maxlength="18" placeholder="Your phone number" required>
+        </div>
+        <div class="field full">
+          <label for="courseChoice">Interested Course</label>
+          <select id="courseChoice" name="courseChoice" required>
+            <option value="">Select a course</option>
+            <option>Foundation Classes</option>
+            <option>Competitive Exams</option>
+            <option>Computer Courses</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="studentMessage">Your Question (Optional)</label>
+          <textarea id="studentMessage" name="studentMessage" maxlength="500" placeholder="Ask about fees, batches or admissions"></textarea>
+        </div>
+        <div class="field full">
+          <button type="submit" class="btn btn-blue">Prepare WhatsApp Enquiry ↗</button>
+        </div>
+        <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">HAVE QUESTIONS?</span>
+      <h2>Frequently asked questions.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>How can I enquire about a course?</summary>
+        <p>Complete the admission enquiry form. It prepares a message that you can send through WhatsApp.</p>
+      </details>
+      <details>
+        <summary>How do I know the course fees?</summary>
+        <p>Fees are not specified in this sample. Contact the real institute for its current fee structure.</p>
+      </details>
+      <details>
+        <summary>Can I visit the institute before enrolling?</summary>
+        <p>Contact the institute to ask about its address, office hours and available counselling appointments.</p>
+      </details>
+      <details>
+        <summary>Does this website confirm admission?</summary>
+        <p>No. This demo only prepares an enquiry message. Admission requires confirmation from the actual institute.</p>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="brand" style="color:white">APEX<span>ACADEMY.</span></a>
+        <p>A sample coaching institute website concept designed for the Zord Studio portfolio. Demo content only.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#faq">FAQs</a>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> Apex Academy Demo · Concept website by Zord Studio · Not a real institute</div>
+  </div>
+</footer>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", function () {
+  const open = navLinks.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+  link.addEventListener("click", function () {
+    navLinks.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.textContent = "☰ Menu";
+  });
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const admissionForm = document.getElementById("admissionForm");
+const formMessage = document.getElementById("formMessage");
+
+admissionForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  if (!admissionForm.reportValidity()) return;
+
+  const name = document.getElementById("studentName").value.trim();
+  const phone = document.getElementById("studentPhone").value.trim();
+  const course = document.getElementById("courseChoice").value;
+  const question = document.getElementById("studentMessage").value.trim();
+
+  if (!name || !phone || !course) return;
+
+  const message =
+    document.getElementById("studentMessage").value.trim();
+
+  if (!name || !phone || !course) return;
+
+  const message =
+    "Hello Apex Academy! I would like to enquire about admission.\n\n" +
+    "Student name: " + name + "\n" +
+    "Phone: " + phone + "\n" +
+    "Course: " + course + "\n" +
+    "Question: " + (question || "Please share course and fee details.") +
+    "\n\nPlease contact me with more information.";
+
+  formMessage.textContent =
+    "Opening WhatsApp. Choose the institute's contact to send the enquiry.";
+
+  const url = "https://wa.me/?text=" + encodeURIComponent(message);
+  window.open(url, "_blank", "noopener,noreferrer");
+});
+</script>
+</body>
+</html>
